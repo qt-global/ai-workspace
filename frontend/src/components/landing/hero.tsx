@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
+import Image from "next/image";
+import { SparklesIcon, BookOpenIcon, RocketIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -10,25 +11,20 @@ import { AuroraText } from "@/components/ui/aurora-text";
 import { Button } from "@/components/ui/button";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { useRenderActivity } from "@/core/dom/render-activity";
-import { env } from "@/env";
 import { cn } from "@/lib/utils";
 
 const Galaxy = dynamic(() => import("@/components/ui/galaxy"), { ssr: false });
 
 const HERO_WORDS = [
-  "Deep Research",
-  "Collect Data",
-  "Analyze Data",
-  "Generate Webpages",
-  "Vibe Coding",
-  "Generate Slides",
-  "Generate Images",
-  "Generate Podcasts",
-  "Generate Videos",
-  "Generate Songs",
-  "Organize Emails",
-  "Do Anything",
-  "Learn Anything",
+  "Tìm kiếm Vé máy bay",
+  "Trích xuất CCCD & Hộ chiếu",
+  "Nghiên cứu Du lịch",
+  "Phân tích Dữ liệu CRM",
+  "Tự động hóa CSKH",
+  "Xử lý Đơn hàng CMS",
+  "Tạo Báo cáo Kinh doanh",
+  "Vibe Coding & Web Apps",
+  "Tự động hóa Quy trình",
 ];
 
 export function Hero({ className }: { className?: string }) {
@@ -38,64 +34,93 @@ export function Hero({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative flex size-full flex-col items-center justify-center",
+        "relative flex size-full flex-col items-center justify-center pt-8",
         className,
       )}
     >
       <div
         ref={galaxyContainerRef}
-        className="absolute inset-0 z-0 bg-black/40"
+        className="absolute inset-0 z-0 bg-black/50"
       >
         {renderGalaxy && (
           <Galaxy
             mouseRepulsion={false}
             starSpeed={0.2}
             density={0.6}
-            glowIntensity={0.35}
-            twinkleIntensity={0.3}
+            glowIntensity={0.45}
+            twinkleIntensity={0.35}
             speed={0.5}
           />
         )}
       </div>
       <FlickeringGrid
-        className="absolute inset-0 z-0 mask-[url(/images/deer.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
+        className="absolute inset-0 z-0 opacity-40"
         squareSize={4}
         gridGap={4}
-        color={"white"}
-        maxOpacity={0.3}
+        color={"#00c6ff"}
+        maxOpacity={0.25}
         flickerChance={0.25}
       />
-      <div className="container-md relative z-10 mx-auto flex min-h-[92svh] flex-col items-center justify-center px-4 pt-20 pb-14">
-        <h1 className="text-center text-5xl leading-tight font-bold break-words md:text-6xl">
-          DeerFlow
-        </h1>
-        <div className="mt-3 flex w-full max-w-full min-w-0 items-center justify-center gap-x-2 text-center text-2xl font-semibold md:text-4xl">
-          <HeroWordRotate words={HERO_WORDS} />
-          <span className="whitespace-nowrap">SuperAgent</span>
+      <div className="container-md relative z-10 mx-auto flex min-h-[88svh] flex-col items-center justify-center px-4 pt-24 pb-14 text-center">
+        {/* Badge */}
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-4 py-1.5 backdrop-blur-md">
+          <SparklesIcon className="size-4 text-cyan-400 animate-pulse" />
+          <span className="text-xs font-semibold text-cyan-300 tracking-wide uppercase">
+            Hệ sinh thái AI Thông minh QTGO 2.0
+          </span>
         </div>
-        {env.NEXT_PUBLIC_STATIC_WEBSITE_ONLY && (
-          <a
-            href="https://byteplus.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="mt-4 flex size-fit items-center rounded-lg border border-white px-3 text-center text-shadow-sm">
-              <span>In partnership with</span>&nbsp;
-              <BytePlusIcon className="h-4" />
-            </div>
-          </a>
-        )}
-        <p className="text-muted-foreground mt-8 max-w-4xl text-center text-base leading-7 text-shadow-sm sm:text-xl md:text-2xl">
-          An open-source SuperAgent harness that researches, codes, and creates.
-          With the help of sandboxes, memories, tools, skills and subagents, it
-          handles different levels of tasks that could take minutes to hours.
+
+        {/* Logo & Main Title */}
+        <div className="flex flex-col items-center justify-center gap-3">
+          <div className="relative h-16 w-56 md:h-20 md:w-72 drop-shadow-[0_0_25px_rgba(0,198,255,0.4)]">
+            <Image
+              src="/images/qtgo-logo.png"
+              alt="QTGO Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <h1 className="text-4xl leading-tight font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
+            AI WORKSPACE
+          </h1>
+        </div>
+
+        {/* Rotating SuperAgent Subtitle */}
+        <div className="mt-4 flex w-full max-w-full min-w-0 items-center justify-center gap-x-2 text-center text-xl font-bold text-gray-200 sm:text-3xl md:text-4xl">
+          <HeroWordRotate words={HERO_WORDS} />
+          <span className="whitespace-nowrap bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            SuperAgent
+          </span>
+        </div>
+
+        {/* Description */}
+        <p className="mt-6 max-w-3xl text-center text-base leading-relaxed text-gray-300 sm:text-lg md:text-xl font-light">
+          Nền tảng Trợ lý AI thế hệ mới cho <strong className="text-cyan-400 font-semibold">QTGO</strong>. Tích hợp Sandboxes, Skills, Subagents & Trí tuệ nhân tạo để tự động hóa tìm kiếm vé máy bay, xử lý đơn hàng CRM/CMS và phân tích dữ liệu chuyên sâu.
         </p>
-        <Link href="/workspace">
-          <Button className="mt-8 h-11 px-5" size="lg">
-            <span className="text-md">Get Started with 2.0</span>
-            <ChevronRightIcon className="size-4" />
-          </Button>
-        </Link>
+
+        {/* Actions */}
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <Link href="/workspace">
+            <Button
+              size="lg"
+              className="h-12 px-7 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold text-base shadow-xl shadow-cyan-500/20 border border-cyan-400/30 rounded-xl transition-all duration-300 hover:scale-105"
+            >
+              <RocketIcon className="size-5 mr-2" />
+              <span>Bắt đầu với QTGO AI Workspace</span>
+            </Button>
+          </Link>
+          <Link href="/en/docs">
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-12 px-6 border-white/20 bg-white/5 hover:bg-white/10 text-white font-medium text-base backdrop-blur-md rounded-xl transition-all duration-300"
+            >
+              <BookOpenIcon className="size-5 mr-2 text-cyan-400" />
+              <span>Tài liệu & Hướng dẫn</span>
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

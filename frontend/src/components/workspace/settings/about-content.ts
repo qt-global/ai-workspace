@@ -4,66 +4,35 @@
  */
 import { APP_VERSION } from "@/version";
 
-export const aboutMarkdown = `# 🦌 [About DeerFlow ${APP_VERSION}](https://github.com/bytedance/deer-flow)
+export const aboutMarkdown = `# 🚀 [Giới thiệu QTGO AI Workspace ${APP_VERSION}](https://qtgo.vn)
 
-> **From Open Source, Back to Open Source**
+> **Hệ sinh thái Trợ lý AI Thông minh & Tự động hóa Doanh nghiệp**
 
-DeerFlow (**D**eep **E**xploration and **E**fficient **R**esearch **Flow**) is an open-source **super agent harness** that orchestrates **sub-agents**, **memory**, and **sandboxes** to do almost anything — powered by **extensible skills**.
-
----
-
-## 🚀 Core Features
-
-* **Skills & Tools**: With built-in and extensible skills and tools, DeerFlow can do almost anything.
-* **Sub-Agents**: Sub-Agents help the main agent to do the tasks that are too complex to be done by the main agent.
-* **Sandbox & File System**: Safely execute code and manipulate files in the sandbox.
-* **Context Engineering**: Isolated sub-agent context, summarization to keep the context window sharp.
-* **Long-Term Memory**: Keep recording the user's profile, top of mind, and conversation history.
+**QTGO AI Workspace** là nền tảng SuperAgent thế hệ mới được thiết kế riêng cho hệ sinh thái **QTGO**. Tích hợp các bộ kỹ năng chuyên biệt (**Skills**), tiến trình chạy song song (**Sub-Agents**), bộ nhớ dài hạn (**Memory**) và môi trường an toàn (**Sandbox**) để hỗ trợ tra cứu vé máy bay, quản lý đơn hàng CRM/CMS, chăm sóc khách hàng và nghiên cứu chuyên sâu.
 
 ---
 
-## 🌟 GitHub Repository
+## 🌟 Tính năng Cốt lõi
 
-![Star History Chart](https://api.star-history.com/svg?repos=bytedance/deer-flow&type=Date)
-
-Explore DeerFlow on GitHub: [github.com/bytedance/deer-flow](https://github.com/bytedance/deer-flow)
-
-## 🌐 Official Website
-
-Visit the official website of DeerFlow: [deerflow.tech](https://deerflow.tech/)
-
-## 📧 Support
-
-If you have any questions or need help, please contact us at [support@deerflow.tech](mailto:support@deerflow.tech).
+* ✈️ **Vé Máy Bay & Du Lịch**: Tra cứu vé máy bay, so sánh giá cước và tự động lập lịch trình du lịch thông minh.
+* 📊 **Phân Tích Dữ Liệu CRM / CMS**: Khai phá dữ liệu đơn hàng, theo dõi doanh thu và tạo báo cáo trực quan.
+* 🎧 **Hỗ Trợ CSKH Tự Động**: Giải đáp thắc mắc, kiểm tra trạng thái vé và tư vấn khách hàng 24/7.
+* 🛠️ **Skills & Tools**: Tự động kích hoạt các công cụ tra cứu, web search, thao tác file và xuất báo cáo.
+* 🧠 **Bộ Nhớ Thông Minh**: Ghi nhớ bối cảnh người dùng, thói quen và lịch sử làm việc.
 
 ---
 
-## 📜 License
+## 🌐 Trang chủ Chính thức
 
-DeerFlow is proudly open source and distributed under the **MIT License**.
+Ghé thăm website chính thức của QTGO: [qtgo.vn](https://qtgo.vn)
+
+## 📧 Hỗ trợ & Liên hệ
+
+Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ kỹ thuật, vui lòng liên hệ với chúng tôi tại [hotro@qtgo.vn](mailto:hotro@qtgo.vn).
 
 ---
 
-## 🙌 Acknowledgments
+## 📜 Bản quyền
 
-We extend our heartfelt gratitude to the open source projects and contributors who have made DeerFlow a reality. We truly stand on the shoulders of giants.
-
-### Core Frameworks
-- **[LangChain](https://github.com/langchain-ai/langchain)**: A phenomenal framework that powers our LLM interactions and chains.
-- **[LangGraph](https://github.com/langchain-ai/langgraph)**: Enabling sophisticated multi-agent orchestration.
-- **[Next.js](https://nextjs.org/)**: A cutting-edge framework for building web applications.
-
-### UI Libraries
-- **[Shadcn](https://ui.shadcn.com/)**: Minimalistic components that power our UI.
-- **[SToneX](https://github.com/stonexer)**: For his invaluable contribution to token-by-token visual effects.
-
-These outstanding projects form the backbone of DeerFlow and exemplify the transformative power of open source collaboration.
-
-### Special Thanks
-Finally, we want to express our heartfelt gratitude to the core authors of DeerFlow 1.0 and 2.0:
-
-- **[Daniel Walnut](https://github.com/hetaoBackend/)**
-- **[Henry Li](https://github.com/magiccube/)**
-
-Without their vision, passion and dedication, \`DeerFlow\` would not be what it is today.
+QTGO AI Workspace &copy; 2026 **QTGO - QT Global**. Tất cả quyền được bảo lưu.
 `;

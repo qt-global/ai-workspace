@@ -7,6 +7,8 @@ export interface BentoCardProps {
   title?: React.ReactNode;
   description?: React.ReactNode;
   label?: React.ReactNode;
+  image?: string;
+  icon?: React.ReactNode;
   textAutoHide?: boolean;
   disableAnimations?: boolean;
 }
@@ -567,10 +569,23 @@ const MagicBento: React.FC<BentoProps> = ({
                 clickEffect={clickEffect}
                 enableMagnetism={enableMagnetism}
               >
-                <div className="magic-bento-card__header">
-                  <div className="magic-bento-card__label">{card.label}</div>
+                {card.image && (
+                  <div className="absolute inset-0 z-0 overflow-hidden rounded-xl opacity-30 transition-all duration-300 pointer-events-none group-hover:opacity-45 group-hover:scale-105">
+                    <img
+                      src={card.image}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent" />
+                  </div>
+                )}
+                <div className="magic-bento-card__header relative z-10 flex items-center justify-between">
+                  <div className="magic-bento-card__label flex items-center gap-1.5">
+                    {card.icon}
+                    <span>{card.label}</span>
+                  </div>
                 </div>
-                <div className="magic-bento-card__content">
+                <div className="magic-bento-card__content relative z-10">
                   <h2 className="magic-bento-card__title">{card.title}</h2>
                   <div className="magic-bento-card__description">
                     {card.description}

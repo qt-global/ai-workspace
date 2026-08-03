@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 
 import { Section } from "../section";
 
+import { FileTextIcon, BrainCircuitIcon, GitForkIcon, CpuIcon, SparklesIcon, ShieldCheckIcon } from "lucide-react";
+
 const MagicBento = dynamic(() => import("@/components/ui/magic-bento"), {
   ssr: false,
 });
@@ -20,42 +22,51 @@ const COLOR = "#0a0a0a";
 const features: BentoCardProps[] = [
   {
     color: COLOR,
-    label: "Context Engineering",
-    title: "Long/Short-term Memory",
-    description: "Now the agent can better understand you",
+    label: "Trích xuất Thông tin",
+    icon: <FileTextIcon className="size-4 text-cyan-400" />,
+    image: "/images/7cfa5f8f-a2f8-47ad-acbd-da7137baf990.jpg",
+    title: "OCR CCCD & Hộ chiếu Tự động",
+    description: "Nhận diện & trích xuất chính xác họ tên, số CCCD/Passport, ngày sinh, quốc tịch phục vụ xuất vé máy bay & nhập liệu CRM",
   },
   {
     color: COLOR,
-    label: "Long Task Running",
-    title: "Planning and Sub-tasking",
-    description:
-      "Plans ahead, reasons through complexity, then executes sequentially or in parallel",
+    label: "Bộ nhớ Thông minh",
+    icon: <BrainCircuitIcon className="size-4 text-blue-400" />,
+    image: "/images/ad76c455-5bf9-4335-8517-fc03834ab828.jpg",
+    title: "Ghi nhớ Ngắn hạn & Dài hạn",
+    description: "AI thấu hiểu bối cảnh người dùng, lịch sử tra cứu & thói quen đặt vé",
   },
   {
     color: COLOR,
-    label: "Extensible",
-    title: "Skills and Tools",
-    description:
-      "Plug, play, or even swap built-in tools. Build the agent you want.",
-  },
-
-  {
-    color: COLOR,
-    label: "Persistent",
-    title: "Sandbox with File System",
-    description: "Read, write, run — like a real computer",
+    label: "Tác vụ Phức tạp",
+    icon: <GitForkIcon className="size-4 text-indigo-400" />,
+    image: "/images/d3e5adaf-084c-4dd5-9d29-94f1d6bccd98.jpg",
+    title: "Lập kế hoạch & Subagents",
+    description: "Tự động phân rã nhiệm vụ lớn, gọi subagent thực thi song song",
   },
   {
     color: COLOR,
-    label: "Flexible",
-    title: "Multi-Model Support",
-    description: "Doubao, DeepSeek, OpenAI, Gemini, etc.",
+    label: "Khả năng Mở rộng",
+    icon: <CpuIcon className="size-4 text-sky-400" />,
+    image: "/images/4f3e55ee-f853-43db-bfb3-7d1a411f03cb.jpg",
+    title: "Skills & MCP Tools",
+    description: "Tích hợp API vé máy bay, CRM/CMS, Web Search & hệ thống dữ liệu nội bộ",
   },
   {
     color: COLOR,
-    label: "Free",
-    title: "Open Source",
-    description: "MIT License, self-hosted, full control",
+    label: "Đa Mô hình AI",
+    icon: <SparklesIcon className="size-4 text-purple-400" />,
+    image: "/images/21cfea46-34bd-4aa6-9e1f-3009452fbeb9.jpg",
+    title: "Hỗ trợ Đa LLM Thế hệ mới",
+    description: "Gemini 2.0 Flash / Pro, OpenAI GPT-4o, DeepSeek V3, Claude 3.5 & Vision OCR",
+  },
+  {
+    color: COLOR,
+    label: "Bảo mật & Tốc độ",
+    icon: <ShieldCheckIcon className="size-4 text-emerald-400" />,
+    image: "/images/3823e443-4e2b-4679-b496-a9506eae462b.jpg",
+    title: "Tối ưu cho QTGO",
+    description: "Bảo mật thông tin hành khách & dữ liệu doanh nghiệp, xử lý siêu tốc",
   },
 ];
 
@@ -68,8 +79,8 @@ export function WhatsNewSection({ className }: { className?: string }) {
   return (
     <Section
       className={cn("", className)}
-      title="Whats New in DeerFlow 2.0"
-      subtitle="DeerFlow is now evolving from a Deep Research agent into a full-stack Super Agent"
+      title="Tính năng Nổi bật trong QTGO AI Workspace"
+      subtitle="QTGO AI tiến hóa mạnh mẽ thành hệ sinh thái SuperAgent đa nhiệm cho doanh nghiệp & người dùng"
     >
       <div
         ref={bentoContainerRef}

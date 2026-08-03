@@ -3,8 +3,6 @@ import { Header } from "@/components/landing/header";
 import { Hero } from "@/components/landing/hero";
 import { CaseStudySection } from "@/components/landing/sections/case-study-section";
 import { CommunitySection } from "@/components/landing/sections/community-section";
-import { SandboxSection } from "@/components/landing/sections/sandbox-section";
-import { SkillsSection } from "@/components/landing/sections/skills-section";
 import { WhatsNewSection } from "@/components/landing/sections/whats-new-section";
 import { DEFAULT_LOCALE } from "@/core/i18n/locale";
 
@@ -15,8 +13,6 @@ export default function LandingPage() {
       <main className="flex w-full flex-col">
         <Hero />
         <CaseStudySection />
-        <SkillsSection />
-        <SandboxSection />
         <WhatsNewSection />
         <CommunitySection />
       </main>

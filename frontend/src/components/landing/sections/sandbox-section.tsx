@@ -12,12 +12,11 @@ export function SandboxSection({ className }: { className?: string }) {
   return (
     <Section
       className={className}
-      title="Agent Runtime Environment"
+      title="Môi trường Thực thi & Sandbox An toàn"
       subtitle={
         <p>
-          We give DeerFlow a &quot;computer&quot;, which can execute commands,
-          manage files, and run long tasks — all in a secure Docker-based
-          sandbox
+          QTGO AI được trang bị môi trường Sandbox thực thi code, quản lý file,
+          kết nối API và xử lý các tác vụ phức tạp trong không gian cô lập an toàn.
         </p>
       }
     >

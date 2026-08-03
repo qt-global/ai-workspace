@@ -84,13 +84,13 @@ export const enUS: Translations = {
 
   // Welcome
   welcome: {
-    greeting: "Hello, again!",
+    greeting: "Xin chào!",
     description:
-      "Welcome to 🦌 DeerFlow, an open source super agent. With built-in and custom skills, DeerFlow helps you search on the web, analyze data, and generate artifacts like slides, web pages and do almost anything.",
+      "Chào mừng bạn đến với QTGO AI Workspace, nền tảng Trợ lý AI Thông minh & Tự động hóa. Hỗ trợ tra cứu vé máy bay, lập lịch trình du lịch, phân tích dữ liệu CRM/CMS và tự động hóa quy trình.",
 
-    createYourOwnSkill: "Create Your Own Skill",
+    createYourOwnSkill: "Tạo Kỹ năng Mới",
     createYourOwnSkillDescription:
-      "Create your own skill to release the power of DeerFlow. With customized skills,\nDeerFlow can help you search on the web, analyze data, and generate\n artifacts like slides, web pages and do almost anything.",
+      "Tạo kỹ năng tùy chỉnh để mở rộng sức mạnh cho QTGO AI Workspace. Với các kỹ năng riêng, QTGO AI giúp bạn tra cứu vé máy bay, phân tích dữ liệu và tạo báo cáo tự động.",
   },
 
   // Clipboard
@@ -518,13 +518,13 @@ export const enUS: Translations = {
 
   // Workspace
   workspace: {
-    officialWebsite: "DeerFlow's official website",
-    githubTooltip: "DeerFlow on GitHub",
+    officialWebsite: "Trang chủ QTGO.vn",
+    githubTooltip: "Hệ sinh thái QTGO AI",
     settingsAndMore: "Settings and more",
-    visitGithub: "DeerFlow on GitHub",
-    reportIssue: "Report an issue",
-    contactUs: "Contact us",
-    about: "About DeerFlow",
+    visitGithub: "Hệ sinh thái QTGO",
+    reportIssue: "Hỗ trợ & Góp ý",
+    contactUs: "Liên hệ QTGO",
+    about: "About QTGO AI",
     logout: "Log out",
     gatewayUnavailable: "Gateway is temporarily unavailable.",
     gatewayUnavailableRetrying: "Retrying in the background…",

@@ -90,7 +90,7 @@ export function WorkspaceNavMenu() {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <a
-                    href="https://deerflow.tech/"
+                    href="https://qtgo.vn"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -99,19 +99,9 @@ export function WorkspaceNavMenu() {
                       {t.workspace.officialWebsite}
                     </DropdownMenuItem>
                   </a>
-                  <a
-                    href="https://github.com/bytedance/deer-flow"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <DropdownMenuItem>
-                      <GithubIcon />
-                      {t.workspace.visitGithub}
-                    </DropdownMenuItem>
-                  </a>
                   <DropdownMenuSeparator />
                   <a
-                    href="https://github.com/bytedance/deer-flow/issues"
+                    href="https://qtgo.vn"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -120,7 +110,7 @@ export function WorkspaceNavMenu() {
                       {t.workspace.reportIssue}
                     </DropdownMenuItem>
                   </a>
-                  <a href="mailto:support@deerflow.tech">
+                  <a href="mailto:hotro@qtgo.vn">
                     <DropdownMenuItem>
                       <MailIcon />
                       {t.workspace.contactUs}

@@ -1,3 +1,6 @@
+"use client";
+
+import Image from "next/image";
 import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
@@ -11,19 +14,27 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        "container-md mx-auto mt-32 flex flex-col items-center justify-center",
+        "container-md mx-auto mt-24 flex flex-col items-center justify-center pb-8",
         className,
       )}
     >
-      <hr className="from-border/0 to-border/0 m-0 h-px w-full border-none bg-linear-to-r via-white/20" />
-      <div className="text-muted-foreground container flex h-20 flex-col items-center justify-center text-sm">
-        <p className="text-center font-serif text-lg md:text-xl">
-          &quot;Originated from Open Source, give back to Open Source.&quot;
+      <hr className="m-0 h-px w-full border-none bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+      <div className="container flex flex-col items-center justify-center gap-3 pt-8 pb-4">
+        <div className="relative h-7 w-28 opacity-90">
+          <Image
+            src="/images/qtgo-logo.png"
+            alt="QTGO Logo"
+            width={110}
+            height={28}
+            className="object-contain"
+          />
+        </div>
+        <p className="text-center text-sm text-gray-400 max-w-md font-light">
+          Nền tảng Trợ lý AI Thông minh & Hệ sinh thái Đặt vé - Tự động hóa Doanh nghiệp QTGO
         </p>
       </div>
-      <div className="text-muted-foreground container mb-8 flex flex-col items-center justify-center text-xs">
-        <p>Licensed under MIT License</p>
-        <p>&copy; {year} DeerFlow</p>
+      <div className="text-gray-500 container flex flex-col items-center justify-center text-xs gap-1">
+        <p>&copy; {year} QTGO - QT Global. All rights reserved.</p>
       </div>
     </footer>
   );
