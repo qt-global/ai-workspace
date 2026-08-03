@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -79,7 +80,7 @@ export default function SetupPage() {
     setError("");
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Mật khẩu không khớp");
       return;
     }
 
@@ -109,7 +110,7 @@ export default function SetupPage() {
 
       router.push("/workspace");
     } catch {
-      setError("Network error. Please try again.");
+      setError("Lỗi kết nối mạng. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -121,11 +122,11 @@ export default function SetupPage() {
     setError("");
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Mật khẩu không khớp");
       return;
     }
     if (newPassword.length < 8) {
-      setError("Password must be at least 8 characters");
+      setError("Mật khẩu phải có ít nhất 8 ký tự");
       return;
     }
 
@@ -155,7 +156,7 @@ export default function SetupPage() {
 
       router.push("/workspace");
     } catch {
-      setError("Network error. Please try again.");
+      setError("Lỗi kết nối mạng. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -166,7 +167,7 @@ export default function SetupPage() {
   if (mode === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground text-sm">Loading…</p>
+        <p className="text-muted-foreground text-sm">Đang tải...</p>
       </div>
     );
   }
@@ -209,45 +210,54 @@ export default function SetupPage() {
   // ── Admin initialization form ──────────────────────────────────────
   if (mode === "init_admin") {
     return (
-      <div className="bg-background flex min-h-screen items-center justify-center">
+      <div className="bg-background relative flex min-h-screen items-center justify-center">
         <FlickeringGrid
-          className="absolute inset-0 z-0 mask-[url(/images/deer.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
+          className="absolute inset-0 z-0 opacity-40"
           squareSize={4}
           gridGap={4}
-          color={actualTheme === "dark" ? "white" : "black"}
-          maxOpacity={0.3}
-          flickerChance={0.25}
+          color={actualTheme === "dark" ? "cyan" : "black"}
+          maxOpacity={0.2}
+          flickerChance={0.2}
         />
-        <div className="border-border/20 bg-background/5 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-sm">
-          <div className="text-center">
-            <h1 className="font-serif text-3xl">DeerFlow</h1>
-            <p className="text-muted-foreground mt-2">Create admin account</p>
-            <p className="text-muted-foreground mt-1 text-xs">
-              Set up the administrator account to get started.
+        <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
+          <div className="text-center flex flex-col items-center gap-2">
+            <div className="relative h-10 w-36 mb-1">
+              <Image
+                src="/images/qtgo-logo.png"
+                alt="QTGO Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-white tracking-tight">QTGO AI Workspace</h1>
+            <p className="text-muted-foreground text-sm font-medium">Khởi tạo Tài khoản Quản trị viên (Admin)</p>
+            <p className="text-muted-foreground text-xs font-light">
+              Thiết lập tài khoản admin để bắt đầu quản trị hệ thống QTGO AI.
             </p>
           </div>
-          <form onSubmit={handleInitAdmin} className="space-y-2">
+          <form onSubmit={handleInitAdmin} className="space-y-3">
             <div className="flex flex-col space-y-1">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
+              <label htmlFor="email" className="text-sm font-medium text-gray-200">
+                Email quản trị
               </label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="admin@qtgo.vn"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="flex flex-col space-y-1">
-              <label htmlFor="password" className="text-sm font-medium">
-                Password
+              <label htmlFor="password" className="text-sm font-medium text-gray-200">
+                Mật khẩu
               </label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Password (min. 8 characters)"
+                placeholder="Mật khẩu (tối thiểu 8 ký tự)"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
@@ -255,13 +265,13 @@ export default function SetupPage() {
               />
             </div>
             <div className="flex flex-col space-y-1">
-              <label htmlFor="confirmPassword" className="text-sm font-medium">
-                Confirm Password
+              <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-200">
+                Xác nhận Mật khẩu
               </label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Nhập lại mật khẩu"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -273,8 +283,12 @@ export default function SetupPage() {
               onCheckedChange={setRememberMe}
             />
             {error && <p className="ms-1 text-sm text-red-500">{error}</p>}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating account…" : "Create Admin Account"}
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 border border-cyan-400/30 h-10 mt-2 rounded-xl"
+              disabled={loading}
+            >
+              {loading ? "Đang khởi tạo tài khoản…" : "Tạo Tài Khoản Admin QTGO"}
             </Button>
           </form>
         </div>
@@ -284,43 +298,52 @@ export default function SetupPage() {
 
   // ── Change-password form (needs_setup after login) ─────────────────
   return (
-    <div className="bg-background flex min-h-screen items-center justify-center">
+    <div className="bg-background relative flex min-h-screen items-center justify-center">
       <FlickeringGrid
-        className="absolute inset-0 z-0 mask-[url(/images/deer.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
+        className="absolute inset-0 z-0 opacity-40"
         squareSize={4}
         gridGap={4}
-        color={actualTheme === "dark" ? "white" : "black"}
-        maxOpacity={0.3}
-        flickerChance={0.25}
+        color={actualTheme === "dark" ? "cyan" : "black"}
+        maxOpacity={0.2}
+        flickerChance={0.2}
       />
-      <div className="border-border/20 bg-background/5 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-sm">
-        <div className="text-center">
-          <h1 className="font-serif text-3xl">DeerFlow</h1>
-          <p className="text-muted-foreground mt-2">
-            Complete admin account setup
+      <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
+        <div className="text-center flex flex-col items-center gap-2">
+          <div className="relative h-10 w-36 mb-1">
+            <Image
+              src="/images/qtgo-logo.png"
+              alt="QTGO Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <h1 className="text-2xl font-bold text-white tracking-tight">QTGO AI Workspace</h1>
+          <p className="text-muted-foreground text-sm font-medium">
+            Hoàn tất Cấu hình Tài khoản Admin
           </p>
-          <p className="text-muted-foreground mt-1 text-xs">
-            Set your real email and a new password.
+          <p className="text-muted-foreground text-xs font-light">
+            Cập nhật email chính thức và mật khẩu mới cho quản trị viên.
           </p>
         </div>
         <form onSubmit={handleChangePassword} className="space-y-4">
           <Input
             type="email"
-            placeholder="Your email"
+            placeholder="Email của bạn (ví dụ: admin@qtgo.vn)"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input
             type="password"
-            placeholder="Current password"
+            placeholder="Mật khẩu hiện tại"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             required
           />
           <Input
             type="password"
-            placeholder="New password"
+            placeholder="Mật khẩu mới (tối thiểu 8 ký tự)"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
@@ -328,7 +351,7 @@ export default function SetupPage() {
           />
           <Input
             type="password"
-            placeholder="Confirm new password"
+            placeholder="Xác nhận mật khẩu mới"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
@@ -339,8 +362,12 @@ export default function SetupPage() {
             onCheckedChange={setRememberMe}
           />
           {error && <p className="text-sm text-red-500">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Setting up…" : "Complete Setup"}
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 border border-cyan-400/30 h-10 rounded-xl"
+            disabled={loading}
+          >
+            {loading ? "Đang cập nhật…" : "Hoàn Tất Cấu Hình"}
           </Button>
         </form>
       </div>
