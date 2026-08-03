@@ -1,13 +1,13 @@
 "use client";
 
+import { AtSign, LockKeyhole } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 import { RememberSessionOption } from "@/components/auth/remember-session-option";
 import { Button } from "@/components/ui/button";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { Input } from "@/components/ui/input";
 import { getCsrfHeaders } from "@/core/api/fetcher";
 import { useAuth } from "@/core/auth/AuthProvider";
@@ -24,7 +24,6 @@ type SetupMode = "loading" | "init_admin" | "change_password" | "unavailable";
 export default function SetupPage() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
-  const { theme, resolvedTheme } = useTheme();
   const { t } = useI18n();
   const [mode, setMode] = useState<SetupMode>("loading");
   const [setupStatusAttempt, setSetupStatusAttempt] = useState(0);
@@ -162,31 +161,32 @@ export default function SetupPage() {
     }
   };
 
-  const actualTheme = theme === "system" ? resolvedTheme : theme;
-
   if (mode === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground text-sm">Đang tải...</p>
+      <div className="relative flex min-h-screen items-center justify-center bg-[#0a0a0a] p-4 text-white">
+        <div className="relative z-10 rounded-2xl border border-white/10 bg-zinc-900/80 px-8 py-10 text-center text-sm text-zinc-300 shadow-[0_0_40px_rgba(0,198,255,0.08)] backdrop-blur-xl">
+          Đang tải...
+        </div>
       </div>
     );
   }
 
   if (mode === "unavailable") {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <div className="w-full max-w-md space-y-4 text-center">
+      <div className="relative flex min-h-screen items-center justify-center bg-[#0a0a0a] px-4 text-white">
+        <div className="relative z-10 w-full max-w-md space-y-4 rounded-2xl border border-white/10 bg-zinc-900/80 p-8 text-center text-zinc-100 shadow-[0_0_40px_rgba(0,198,255,0.08)] backdrop-blur-xl">
           <div>
-            <h1 className="text-xl font-semibold">
+            <h1 className="text-xl font-bold text-white">
               {t.login.serviceUnavailableTitle}
             </h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-zinc-400">
               {t.login.serviceUnavailableDescription}
             </p>
           </div>
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-3 pt-2">
             <Button
               type="button"
+              className="h-11 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 text-white shadow-lg shadow-cyan-500/20 hover:from-cyan-400 hover:to-blue-500"
               onClick={() => {
                 setMode("loading");
                 setSetupStatusAttempt((attempt) => attempt + 1);
@@ -197,6 +197,7 @@ export default function SetupPage() {
             <Button
               type="button"
               variant="outline"
+              className="h-11 rounded-xl border-zinc-700 bg-zinc-800/60 text-zinc-200 hover:bg-zinc-800 hover:text-white"
               onClick={() => router.replace("/login")}
             >
               {t.login.signIn}
@@ -210,86 +211,150 @@ export default function SetupPage() {
   // ── Admin initialization form ──────────────────────────────────────
   if (mode === "init_admin") {
     return (
-      <div className="bg-background relative flex min-h-screen items-center justify-center">
-        <FlickeringGrid
-          className="absolute inset-0 z-0 opacity-40"
-          squareSize={4}
-          gridGap={4}
-          color={actualTheme === "dark" ? "cyan" : "black"}
-          maxOpacity={0.2}
-          flickerChance={0.2}
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-[#0a0a0a] p-4 sm:p-6 text-white">
+        {/* Background Glows matching homepage */}
+        <div
+          className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 h-[450px] w-[500px] rounded-full opacity-25 blur-[120px]"
+          style={{
+            background: "radial-gradient(circle, #00c6ff 0%, #0072ff 100%)",
+          }}
         />
-        <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
-          <div className="text-center flex flex-col items-center gap-2">
-            <div className="relative h-10 w-36 mb-1 flex items-center justify-center">
-              <Image
-                src="/images/qtgo-logo.png"
-                alt="QTGO Logo"
-                width={144}
-                height={40}
-                className="h-10 w-auto object-contain"
-                priority
-              />
+
+        {/* Top Header Back to Home link */}
+        <div className="absolute top-6 left-6 z-20">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-4 py-2 text-xs font-medium text-zinc-300 backdrop-blur-md transition-all hover:border-cyan-500/40 hover:bg-zinc-800/80 hover:text-white"
+          >
+            <span className="text-cyan-400">←</span>
+            <span>Trang chủ</span>
+          </Link>
+        </div>
+
+        <div
+          data-testid="auth-card"
+          className="relative z-10 my-8 w-full max-w-[600px] space-y-7 rounded-2xl border border-white/10 bg-zinc-900/80 p-6 sm:p-12 text-zinc-100 shadow-[0_0_50px_rgba(0,198,255,0.08)] backdrop-blur-xl"
+        >
+          {/* Top Gradient Accent Line */}
+          <div className="absolute top-0 right-0 left-0 h-1 rounded-t-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600" />
+
+          <div className="flex flex-col items-center gap-3 text-center">
+            <Link href="/" className="group transition-transform hover:scale-105">
+              <div className="relative mb-1 flex h-14 w-44 items-center justify-center drop-shadow-[0_0_18px_rgba(0,198,255,0.35)]">
+                <Image
+                  src="/images/qtgo-logo.png"
+                  alt="QTGO Logo"
+                  width={150}
+                  height={42}
+                  className="h-auto w-40 object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-4 py-1 backdrop-blur-md">
+              <span className="text-xs font-semibold tracking-wider text-cyan-300 uppercase">
+                QTGO AI Workspace
+              </span>
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">QTGO AI Workspace</h1>
-            <p className="text-muted-foreground text-sm font-medium">Khởi tạo Tài khoản Quản trị viên (Admin)</p>
-            <p className="text-muted-foreground text-xs font-light">
+            <p className="mt-1 text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
+              Khởi tạo Tài khoản Quản trị viên (Admin)
+            </p>
+            <p className="text-xs sm:text-sm text-zinc-400">
               Thiết lập tài khoản admin để bắt đầu quản trị hệ thống QTGO AI.
             </p>
           </div>
-          <form onSubmit={handleInitAdmin} className="space-y-3">
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="email" className="text-sm font-medium text-gray-200">
+          <form
+            onSubmit={handleInitAdmin}
+            className="mx-auto w-full max-w-[480px] space-y-4"
+          >
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-zinc-300"
+              >
                 Email quản trị
               </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@qtgo.vn"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <AtSign
+                  aria-hidden="true"
+                  className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+                />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="admin@qtgo.vn"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+                  required
+                />
+              </div>
             </div>
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="password" className="text-sm font-medium text-gray-200">
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-zinc-300"
+              >
                 Mật khẩu
               </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Mật khẩu (tối thiểu 8 ký tự)"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-                minLength={8}
-              />
+              <div className="relative">
+                <LockKeyhole
+                  aria-hidden="true"
+                  className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+                />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Mật khẩu (tối thiểu 8 ký tự)"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+                  required
+                  minLength={8}
+                />
+              </div>
             </div>
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-200">
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="confirmPassword"
+                className="text-sm font-medium text-zinc-300"
+              >
                 Xác nhận Mật khẩu
               </label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                placeholder="Nhập lại mật khẩu"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                minLength={8}
-              />
+              <div className="relative">
+                <LockKeyhole
+                  aria-hidden="true"
+                  className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+                />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Nhập lại mật khẩu"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+                  required
+                  minLength={8}
+                />
+              </div>
             </div>
             <RememberSessionOption
               checked={rememberMe}
               onCheckedChange={setRememberMe}
             />
-            {error && <p className="ms-1 text-sm text-red-500">{error}</p>}
+            {error && (
+              <div className="rounded-lg border border-red-500/30 bg-red-950/40 p-3 text-xs text-red-300">
+                {error}
+              </div>
+            )}
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 border border-cyan-400/30 h-10 mt-2 rounded-xl"
+              className="mt-2 h-12 w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 border border-cyan-400/30 transition-all duration-200 hover:from-cyan-400 hover:to-indigo-500 focus-visible:ring-cyan-500/30"
               disabled={loading}
             >
-              {loading ? "Đang khởi tạo tài khoản…" : "Tạo Tài Khoản Admin QTGO"}
+              {loading
+                ? "Đang khởi tạo tài khoản…"
+                : "Tạo Tài Khoản Admin QTGO"}
             </Button>
           </form>
         </div>
@@ -299,74 +364,132 @@ export default function SetupPage() {
 
   // ── Change-password form (needs_setup after login) ─────────────────
   return (
-    <div className="bg-background relative flex min-h-screen items-center justify-center">
-      <FlickeringGrid
-        className="absolute inset-0 z-0 opacity-40"
-        squareSize={4}
-        gridGap={4}
-        color={actualTheme === "dark" ? "cyan" : "black"}
-        maxOpacity={0.2}
-        flickerChance={0.2}
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-[#0a0a0a] p-4 sm:p-6 text-white">
+      {/* Background Glows matching homepage */}
+      <div
+        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 h-[450px] w-[500px] rounded-full opacity-25 blur-[120px]"
+        style={{
+          background: "radial-gradient(circle, #00c6ff 0%, #0072ff 100%)",
+        }}
       />
-      <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
-        <div className="text-center flex flex-col items-center gap-2">
-          <div className="relative h-10 w-36 mb-1 flex items-center justify-center">
-            <Image
-              src="/images/qtgo-logo.png"
-              alt="QTGO Logo"
-              width={144}
-              height={40}
-              className="h-10 w-auto object-contain"
-              priority
-            />
+
+      {/* Top Header Back to Home link */}
+      <div className="absolute top-6 left-6 z-20">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-4 py-2 text-xs font-medium text-zinc-300 backdrop-blur-md transition-all hover:border-cyan-500/40 hover:bg-zinc-800/80 hover:text-white"
+        >
+          <span className="text-cyan-400">←</span>
+          <span>Trang chủ</span>
+        </Link>
+      </div>
+
+      <div
+        data-testid="auth-card"
+        className="relative z-10 my-8 w-full max-w-[600px] space-y-7 rounded-2xl border border-white/10 bg-zinc-900/80 p-6 sm:p-12 text-zinc-100 shadow-[0_0_50px_rgba(0,198,255,0.08)] backdrop-blur-xl"
+      >
+        {/* Top Gradient Accent Line */}
+        <div className="absolute top-0 right-0 left-0 h-1 rounded-t-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600" />
+
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Link href="/" className="group transition-transform hover:scale-105">
+            <div className="relative mb-1 flex h-14 w-44 items-center justify-center drop-shadow-[0_0_18px_rgba(0,198,255,0.35)]">
+              <Image
+                src="/images/qtgo-logo.png"
+                alt="QTGO Logo"
+                width={150}
+                height={42}
+                className="h-auto w-40 object-contain"
+                priority
+              />
+            </div>
+          </Link>
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-4 py-1 backdrop-blur-md">
+            <span className="text-xs font-semibold tracking-wider text-cyan-300 uppercase">
+              QTGO AI Workspace
+            </span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">QTGO AI Workspace</h1>
-          <p className="text-muted-foreground text-sm font-medium">
+          <p className="mt-1 text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
             Hoàn tất Cấu hình Tài khoản Admin
           </p>
-          <p className="text-muted-foreground text-xs font-light">
+          <p className="text-xs sm:text-sm text-zinc-400">
             Cập nhật email chính thức và mật khẩu mới cho quản trị viên.
           </p>
         </div>
-        <form onSubmit={handleChangePassword} className="space-y-4">
-          <Input
-            type="email"
-            placeholder="Email của bạn (ví dụ: admin@qtgo.vn)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Mật khẩu hiện tại"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Mật khẩu mới (tối thiểu 8 ký tự)"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-            minLength={8}
-          />
-          <Input
-            type="password"
-            placeholder="Xác nhận mật khẩu mới"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            minLength={8}
-          />
+        <form
+          onSubmit={handleChangePassword}
+          className="mx-auto w-full max-w-[480px] space-y-4"
+        >
+          <div className="relative">
+            <AtSign
+              aria-hidden="true"
+              className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+            />
+            <Input
+              type="email"
+              placeholder="Email của bạn (ví dụ: admin@qtgo.vn)"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+              required
+            />
+          </div>
+          <div className="relative">
+            <LockKeyhole
+              aria-hidden="true"
+              className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+            />
+            <Input
+              type="password"
+              placeholder="Mật khẩu hiện tại"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+              required
+            />
+          </div>
+          <div className="relative">
+            <LockKeyhole
+              aria-hidden="true"
+              className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+            />
+            <Input
+              type="password"
+              placeholder="Mật khẩu mới (tối thiểu 8 ký tự)"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+              required
+              minLength={8}
+            />
+          </div>
+          <div className="relative">
+            <LockKeyhole
+              aria-hidden="true"
+              className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+            />
+            <Input
+              type="password"
+              placeholder="Xác nhận mật khẩu mới"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+              required
+              minLength={8}
+            />
+          </div>
           <RememberSessionOption
             checked={rememberMe}
             onCheckedChange={setRememberMe}
           />
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <div className="rounded-lg border border-red-500/30 bg-red-950/40 p-3 text-xs text-red-300">
+              {error}
+            </div>
+          )}
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 border border-cyan-400/30 h-10 rounded-xl"
+            className="h-12 w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 border border-cyan-400/30 transition-all duration-200 hover:from-cyan-400 hover:to-indigo-500 focus-visible:ring-cyan-500/30"
             disabled={loading}
           >
             {loading ? "Đang cập nhật…" : "Hoàn Tất Cấu Hình"}

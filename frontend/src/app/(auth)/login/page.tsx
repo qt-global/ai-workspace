@@ -1,14 +1,13 @@
 "use client";
 
+import { AtSign, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 import { RememberSessionOption } from "@/components/auth/remember-session-option";
 import { Button } from "@/components/ui/button";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/core/auth/AuthProvider";
 import { resolveAuthNextPath } from "@/core/auth/next-path";
@@ -28,7 +27,6 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isAuthenticated } = useAuth();
-  const { theme, resolvedTheme } = useTheme();
   const { t } = useI18n();
 
   const [email, setEmail] = useState("");
@@ -200,32 +198,60 @@ export default function LoginPage() {
     }
   };
 
-  const actualTheme = theme === "system" ? resolvedTheme : theme;
-
   return (
-    <div className="bg-background relative flex min-h-screen items-center justify-center overflow-x-hidden overflow-y-auto">
-      <FlickeringGrid
-        className="absolute inset-0 z-0 opacity-40"
-        squareSize={4}
-        gridGap={4}
-        color={actualTheme === "dark" ? "cyan" : "black"}
-        maxOpacity={0.2}
-        flickerChance={0.2}
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-[#0a0a0a] p-4 sm:p-6 text-white">
+      {/* Background Glows matching homepage */}
+      <div
+        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 h-[450px] w-[500px] rounded-full opacity-25 blur-[120px]"
+        style={{
+          background: "radial-gradient(circle, #00c6ff 0%, #0072ff 100%)",
+        }}
       />
-      <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
-        <div className="text-center flex flex-col items-center gap-2">
-          <div className="relative h-10 w-36 mb-1 flex items-center justify-center">
-            <Image
-              src="/images/qtgo-logo.png"
-              alt="QTGO Logo"
-              width={144}
-              height={40}
-              className="h-10 w-auto object-contain"
-              priority
-            />
+      <div
+        className="pointer-events-none absolute bottom-10 right-1/4 z-0 h-[300px] w-[300px] rounded-full opacity-15 blur-[100px]"
+        style={{
+          background: "radial-gradient(circle, #7928ca 0%, #ff0080 100%)",
+        }}
+      />
+
+      {/* Top Header Back to Home link */}
+      <div className="absolute top-6 left-6 z-20">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-4 py-2 text-xs font-medium text-zinc-300 backdrop-blur-md transition-all hover:border-cyan-500/40 hover:bg-zinc-800/80 hover:text-white"
+        >
+          <span className="text-cyan-400">←</span>
+          <span>{t.login.backToHome}</span>
+        </Link>
+      </div>
+
+      {/* Main Auth Card Container */}
+      <div
+        data-testid="auth-card"
+        className="relative z-10 my-8 w-full max-w-[600px] space-y-7 rounded-2xl border border-white/10 bg-zinc-900/80 p-6 sm:p-12 text-zinc-100 shadow-[0_0_50px_rgba(0,198,255,0.08)] backdrop-blur-xl"
+      >
+        {/* Top Gradient Accent Line */}
+        <div className="absolute top-0 right-0 left-0 h-1 rounded-t-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600" />
+
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Link href="/" className="group transition-transform hover:scale-105">
+            <div className="relative mb-1 flex h-14 w-44 items-center justify-center drop-shadow-[0_0_18px_rgba(0,198,255,0.35)]">
+              <Image
+                src="/images/qtgo-logo.png"
+                alt="QTGO Logo"
+                width={150}
+                height={42}
+                className="h-auto w-40 object-contain"
+                priority
+              />
+            </div>
+          </Link>
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-4 py-1 backdrop-blur-md">
+            <span className="text-xs font-semibold tracking-wider text-cyan-300 uppercase">
+              QTGO AI Workspace
+            </span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">QTGO AI Workspace</h1>
-          <p className="text-muted-foreground text-sm font-medium">
+          <p className="mt-1 text-center text-xl font-bold tracking-tight text-white sm:text-2xl">
             {isLogin ? t.login.signInTitle : t.login.createAccountTitle}
           </p>
         </div>
@@ -234,17 +260,17 @@ export default function LoginPage() {
           <div
             role="status"
             aria-live="polite"
-            className="border-l-2 border-amber-500 ps-3 text-sm"
+            className="rounded-xl border border-amber-500/30 bg-amber-950/30 px-4 py-3 text-sm text-amber-200 backdrop-blur-md"
           >
-            <p className="font-medium">{t.login.serviceUnavailableTitle}</p>
-            <p className="text-muted-foreground mt-1">
+            <p className="font-medium text-amber-300">{t.login.serviceUnavailableTitle}</p>
+            <p className="mt-1 text-xs text-amber-200/80">
               {t.login.serviceUnavailableDescription}
             </p>
             <Button
               type="button"
               variant="outline"
               size="sm"
-              className="mt-3"
+              className="mt-3 border-amber-500/40 bg-amber-950/50 text-amber-300 hover:bg-amber-900/60 hover:text-white"
               disabled={setupStatusPhase === "checking"}
               onClick={() => {
                 setSetupStatusPhase("checking");
@@ -259,47 +285,70 @@ export default function LoginPage() {
         )}
 
         {systemNeedsAdminSetup && (
-          <div className="border-l-2 border-blue-500 ps-3 text-sm">
-            <p className="font-medium">{t.login.adminSetupRequiredTitle}</p>
-            <p className="text-muted-foreground mt-1">
+          <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/30 px-4 py-3 text-sm text-cyan-200 backdrop-blur-md">
+            <p className="font-medium text-cyan-300">{t.login.adminSetupRequiredTitle}</p>
+            <p className="mt-1 text-xs text-cyan-200/80">
               {t.login.adminSetupRequiredDescription}
             </p>
             <Link
               href="/setup"
-              className="mt-2 inline-block font-medium text-blue-500 hover:underline"
+              className="mt-2 inline-block font-semibold text-cyan-400 hover:text-cyan-300 hover:underline"
             >
-              {t.login.createAdminAccount}
+              {t.login.createAdminAccount} →
             </Link>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-2">
-          <div className="flex flex-col space-y-1">
-            <label htmlFor="email" className="text-sm font-medium">
+        <form
+          onSubmit={handleSubmit}
+          className="mx-auto w-full max-w-[480px] space-y-4"
+        >
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-zinc-300"
+            >
               {t.login.email}
             </label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t.login.emailPlaceholder}
-              required
-            />
+            <div className="relative">
+              <AtSign
+                aria-hidden="true"
+                className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+              />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t.login.emailPlaceholder}
+                className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+                required
+              />
+            </div>
           </div>
-          <div className="flex flex-col space-y-1">
-            <label htmlFor="password" className="text-sm font-medium">
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium text-zinc-300"
+            >
               {t.login.password}
             </label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t.login.passwordPlaceholder}
-              required
-              minLength={isLogin ? 6 : 8}
-            />
+            <div className="relative">
+              <LockKeyhole
+                aria-hidden="true"
+                className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-500"
+              />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t.login.passwordPlaceholder}
+                className="h-12 rounded-xl border-zinc-800 bg-zinc-950/90 pl-11 text-white placeholder:text-zinc-500 focus-visible:border-cyan-500 focus-visible:ring-cyan-500/20"
+                required
+                minLength={isLogin ? 6 : 8}
+              />
+            </div>
           </div>
 
           <RememberSessionOption
@@ -307,9 +356,17 @@ export default function LoginPage() {
             onCheckedChange={setRememberMe}
           />
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <div className="rounded-lg border border-red-500/30 bg-red-950/40 p-3 text-xs text-red-300">
+              {error}
+            </div>
+          )}
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button
+            type="submit"
+            className="h-12 w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 border border-cyan-400/30 transition-all duration-200 hover:from-cyan-400 hover:to-indigo-500 hover:shadow-cyan-500/30 focus-visible:ring-cyan-500/30"
+            disabled={loading}
+          >
             {loading
               ? t.login.pleaseWait
               : isLogin
@@ -319,21 +376,21 @@ export default function LoginPage() {
         </form>
 
         {ssoProviders.length > 0 && (
-          <div className="space-y-2">
+          <div className="mx-auto w-full max-w-[480px] space-y-3">
             {isLogin && (
               <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
+                  <span className="w-full border-t border-zinc-800" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background text-muted-foreground px-2">
+                  <span className="bg-zinc-900 px-3 text-zinc-500">
                     {t.login.orContinueWith}
                   </span>
                 </div>
               </div>
             )}
             {showSsoHint && (
-              <p className="text-muted-foreground text-center text-sm">
+              <p className="text-center text-xs text-zinc-400">
                 {t.login.ssoHint}
               </p>
             )}
@@ -342,7 +399,7 @@ export default function LoginPage() {
                 key={provider.id}
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="h-11 w-full rounded-xl border-zinc-700 bg-zinc-800/60 text-zinc-200 hover:bg-zinc-800 hover:text-white"
                 disabled={loading}
                 onClick={() => {
                   window.location.href = `/api/v1/auth/oauth/${provider.id}?next=${encodeURIComponent(redirectPath)}&remember_me=${String(rememberMe)}`;
@@ -363,15 +420,15 @@ export default function LoginPage() {
                 setError("");
                 setShowSsoHint(false);
               }}
-              className="text-blue-500 hover:underline"
+              className="font-medium text-cyan-400 hover:text-cyan-300 hover:underline"
             >
               {isLogin ? t.login.noAccountSignUp : t.login.haveAccountSignIn}
             </button>
           </div>
         )}
 
-        <div className="text-muted-foreground text-center text-xs">
-          <Link href="/" className="hover:underline">
+        <div className="text-center text-xs text-zinc-500">
+          <Link href="/" className="hover:text-cyan-400 hover:underline transition-colors">
             {t.login.backToHome}
           </Link>
         </div>

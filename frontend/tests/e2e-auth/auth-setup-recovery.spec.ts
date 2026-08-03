@@ -36,6 +36,19 @@ async function mockSetupStatusRecovery(
   return () => requestCount;
 }
 
+async function mockSetupStatus(
+  page: Page,
+  status: { needs_setup: boolean; registration_enabled?: boolean },
+) {
+  await page.route(SETUP_STATUS_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(status),
+    }),
+  );
+}
+
 test.describe("auth setup-status recovery", () => {
   test.beforeEach(async ({ page }) => {
     await page.route("**/api/v1/auth/providers", (route) =>
@@ -98,5 +111,36 @@ test.describe("auth setup-status recovery", () => {
       page.getByRole("button", { name: "Create Admin Account" }),
     ).toBeVisible();
     await expect(page.getByRole("textbox", { name: "Email" })).toBeVisible();
+  });
+
+  test("login uses the QTGO reference auth shell", async ({ page }) => {
+    await mockSetupStatus(page, {
+      needs_setup: false,
+      registration_enabled: true,
+    });
+
+    await page.goto("/login");
+
+    const card = page.getByTestId("auth-card");
+    await expect(card).toBeVisible();
+    await expect(card).toHaveCSS("background-color", "rgb(255, 255, 255)");
+    await expect(card).toHaveCSS("border-top-color", "rgb(56, 98, 223)");
+    await expect(card).toHaveCSS("border-top-width", "4px");
+  });
+
+  test("first-admin setup uses the QTGO reference auth shell", async ({
+    page,
+  }) => {
+    await mockSetupStatus(page, { needs_setup: true });
+
+    await page.goto("/setup");
+
+    const card = page.getByTestId("auth-card");
+    await expect(card).toBeVisible();
+    await expect(card).toHaveCSS("background-color", "rgb(255, 255, 255)");
+    await expect(card).toHaveCSS("border-top-color", "rgb(56, 98, 223)");
+    await expect(
+      page.getByRole("button", { name: "Tạo Tài Khoản Admin QTGO" }),
+    ).toBeVisible();
   });
 });
