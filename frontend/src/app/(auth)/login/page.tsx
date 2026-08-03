@@ -214,12 +214,13 @@ export default function LoginPage() {
       />
       <div className="relative z-10 border-white/10 bg-black/60 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-xl shadow-2xl shadow-cyan-500/10">
         <div className="text-center flex flex-col items-center gap-2">
-          <div className="relative h-10 w-36 mb-1">
+          <div className="relative h-10 w-36 mb-1 flex items-center justify-center">
             <Image
               src="/images/qtgo-logo.png"
               alt="QTGO Logo"
-              fill
-              className="object-contain"
+              width={144}
+              height={40}
+              className="h-10 w-auto object-contain"
               priority
             />
           </div>
