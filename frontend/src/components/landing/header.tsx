@@ -58,12 +58,6 @@ export async function Header({ className, homeURL, locale }: HeaderProps) {
         >
           Workspace
         </Link>
-        <Link
-          href={`/${lang}/docs`}
-          className="text-gray-300 hover:text-white transition-colors"
-        >
-          {t.home.docs}
-        </Link>
       </nav>
       <div className="relative">
         <div
@@ -87,7 +81,6 @@ export async function Header({ className, homeURL, locale }: HeaderProps) {
         links={[
           { href: "/", label: "Trang chủ" },
           { href: "/workspace", label: "Workspace" },
-          { href: `/${lang}/docs`, label: t.home.docs },
         ]}
       />
     </header>

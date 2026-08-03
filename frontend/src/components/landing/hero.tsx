@@ -110,16 +110,6 @@ export function Hero({ className }: { className?: string }) {
               <span>Bắt đầu với QTGO AI Workspace</span>
             </Button>
           </Link>
-          <Link href="/en/docs">
-            <Button
-              variant="outline"
-              size="lg"
-              className="h-12 px-6 border-white/20 bg-white/5 hover:bg-white/10 text-white font-medium text-base backdrop-blur-md rounded-xl transition-all duration-300"
-            >
-              <BookOpenIcon className="size-5 mr-2 text-cyan-400" />
-              <span>Tài liệu & Hướng dẫn</span>
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
