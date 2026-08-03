@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PlaneIcon, CompassIcon, HeadphonesIcon, BarChart3Icon, SearchCheckIcon, Code2Icon } from "lucide-react";
+import { PlaneIcon, CompassIcon, HeadphonesIcon, BarChart3Icon, SearchCheckIcon, FileTextIcon } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import { pathOfThread } from "@/core/threads/utils";
@@ -52,11 +52,11 @@ export function CaseStudySection({ className }: { className?: string }) {
     },
     {
       threadId: "3823e443-4e2b-4679-b496-a9506eae462b",
-      category: "Vibe Coding",
-      icon: Code2Icon,
-      title: "Xây Dựng Web App & Tự Động Hóa Quy Trình",
+      category: "Trích Xuất Dữ Liệu",
+      icon: FileTextIcon,
+      title: "Chuyển Đổi Ảnh CCCD Sang Format Thực Tế",
       description:
-        "Tạo nhanh giao diện tra cứu nội bộ, viết script kết nối API hệ thống QTGO, tự động xuất file Excel báo cáo trong Sandbox.",
+        "Tự động đọc ảnh chụp CCCD/Hộ chiếu, trích xuất dữ liệu thô và chuẩn hóa cấu trúc JSON/Excel phục vụ nhập thông tin hành khách & đặt vé.",
     },
   ];
 
@@ -66,7 +66,7 @@ export function CaseStudySection({ className }: { className?: string }) {
       title="Kịch bản Sử dụng Thực tế QTGO AI"
       subtitle="Khám phá cách QTGO AI SuperAgent xử lý mượt mà các bài toán thực tế cho người dùng và doanh nghiệp"
     >
-      <div className="container-md mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:px-12 lg:grid-cols-3">
+      <div className="max-w-6xl mx-auto mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {caseStudies.map((caseStudy) => {
           const Icon = caseStudy.icon;
           return (
