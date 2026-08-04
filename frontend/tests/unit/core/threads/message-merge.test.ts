@@ -486,6 +486,34 @@ test("getVisibleOptimisticMessages hides the upload optimistic pair after server
   ).toEqual([]);
 });
 
+test("getVisibleOptimisticMessages clears an upload pair when compaction keeps the human count unchanged", () => {
+  const optimisticHuman = {
+    id: "opt-human-2",
+    type: "human",
+    content: "check these files",
+  } as Message;
+  const optimisticUploadingAi = {
+    id: "opt-ai-uploading",
+    type: "ai",
+    content: "Uploading files...",
+  } as Message;
+  const serverHuman = {
+    id: "human-2__user",
+    type: "human",
+    content: "check these files",
+  } as Message;
+
+  expect(
+    getVisibleOptimisticMessages(
+      [optimisticHuman, optimisticUploadingAi],
+      3,
+      3,
+      new Set(["message:human-1"]),
+      [serverHuman],
+    ),
+  ).toEqual([]);
+});
+
 test("getVisibleOptimisticMessages hides optimistic user input after later server turns", () => {
   const optimisticHuman = {
     id: "opt-human-2",

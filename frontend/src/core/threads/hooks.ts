@@ -1010,10 +1010,26 @@ export function getVisibleOptimisticMessages(
   optimisticMessages: Message[],
   previousHumanMessageCount: number,
   currentHumanMessageCount: number,
+  baselineMessageIdentities: ReadonlySet<string> | null = null,
+  currentMessages: Message[] = [],
 ): Message[] {
+  // Compaction can replace an old human message with the current one without
+  // increasing the count, so also confirm against the pre-submit identities.
+  const newHumanIdentityArrived =
+    baselineMessageIdentities !== null &&
+    currentMessages.some((message) => {
+      const identity = messageIdentity(message);
+      return (
+        message.type === "human" &&
+        !isHiddenFromUIMessage(message) &&
+        identity !== undefined &&
+        !baselineMessageIdentities.has(identity)
+      );
+    });
   if (
     optimisticMessages.some((message) => message.type === "human") &&
-    currentHumanMessageCount > previousHumanMessageCount
+    (currentHumanMessageCount > previousHumanMessageCount ||
+      newHumanIdentityArrived)
   ) {
     return [];
   }
@@ -1911,13 +1927,26 @@ export function useThreadStream({
   useEffect(() => {
     if (optimisticMessageCount === 0) return;
 
-    const newHumanMsgArrived = humanMessageCount > prevHumanMsgCountRef.current;
+    const optimisticStillVisible =
+      getVisibleOptimisticMessages(
+        optimisticMessages,
+        prevHumanMsgCountRef.current,
+        humanMessageCount,
+        localTurnOrderBaselineIdentitiesRef.current,
+        persistedMessages,
+      ).length > 0;
 
-    if (!hasHumanOptimistic || newHumanMsgArrived) {
+    if (!hasHumanOptimistic || !optimisticStillVisible) {
       setOptimisticMessages([]);
       setOptimisticThreadId(null);
     }
-  }, [hasHumanOptimistic, humanMessageCount, optimisticMessageCount]);
+  }, [
+    hasHumanOptimistic,
+    humanMessageCount,
+    optimisticMessageCount,
+    optimisticMessages,
+    persistedMessages,
+  ]);
 
   useEffect(() => {
     if (
@@ -2365,6 +2394,8 @@ export function useThreadStream({
     optimisticThreadId === currentViewThreadId ? optimisticMessages : [],
     prevHumanMsgCountRef.current,
     humanMessageCount,
+    localTurnOrderBaselineIdentitiesRef.current,
+    persistedMessages,
   );
   const visibleOptimisticMessages =
     rawVisibleOptimisticMessages.length === 0
