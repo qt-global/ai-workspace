@@ -1757,6 +1757,8 @@ export function useThreadStream({
     },
     onFinish(state) {
       listeners.current.onFinish?.(state.values);
+      setOptimisticMessages([]);
+      setOptimisticThreadId(null);
       pendingPreparedReplayRef.current = null;
       pendingUsageBaselineMessageIdsRef.current = new Set(
         messagesRef.current
