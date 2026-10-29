@@ -515,3 +515,7 @@ See the [LICENSE](../LICENSE) file in the project root.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+### Gateway route permissions
+
+Stateless `/api/runs/stream` and `/api/runs/wait` enforce `runs:create`; thread creation and search enforce `threads:write` and `threads:read`. Stateless runs retain their body-thread ownership checks. Authorization-disabled development mode retains its existing permission resolution.
