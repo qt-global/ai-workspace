@@ -5,7 +5,7 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from _router_auth_helpers import make_authed_test_app
+from _router_auth_helpers import call_unwrapped, make_authed_test_app
 from fastapi import FastAPI, HTTPException
 from fastapi.testclient import TestClient
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
@@ -662,7 +662,8 @@ def test_insert_race_recovery_claims_unscoped_row_for_trusted_owner() -> None:
     )
 
     async def _scenario():
-        response = await threads.create_thread(
+        response = await call_unwrapped(
+            threads.create_thread,
             threads.ThreadCreateRequest(thread_id="channel-thread", metadata={"k": "v"}),
             request,
         )
@@ -800,7 +801,8 @@ def test_internal_owner_header_assigns_thread_to_owner() -> None:
     )
 
     async def _scenario():
-        response = await threads.create_thread(
+        response = await call_unwrapped(
+            threads.create_thread,
             threads.ThreadCreateRequest(thread_id="channel-thread", metadata={}),
             request,
         )

@@ -1450,3 +1450,7 @@ See `docs/` directory for detailed documentation:
 - [PATH_EXAMPLES.md](docs/PATH_EXAMPLES.md) - Path types and usage
 - [summarization.md](docs/summarization.md) - Context summarization
 - [plan_mode_usage.md](docs/plan_mode_usage.md) - Plan mode with TodoList
+
+### Route permission regression checks
+
+Stateless run launch routes must enforce `runs:create`, independently of body-thread ownership checks. Thread creation and search require `threads:write` and `threads:read`. `tests/test_run_route_permission_boundary.py` executes the real route/decorator AST with inert handler dependencies using stdlib unittest; keep the normal HTTP/ownership tests as integration coverage.
